@@ -6,7 +6,7 @@ public class MacroMain
 	{
 		Typist typist = new Typist();
 		MacroParser parser = new MacroParser();
-		ArrayList<int[]> cmds = parser.parseFile("test");
+		ArrayList<int[]> cmds = parser.parseFile("test.txt");
 
 		typist.type(cmds);
 
