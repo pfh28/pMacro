@@ -1,5 +1,8 @@
+package pmacro.parser;
+
+import pmacro.Typist;
+
 import java.util.HashMap;
-import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 /*
 	Class parses in which

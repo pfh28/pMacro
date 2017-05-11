@@ -1,5 +1,6 @@
+package pmacro;
+
 import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.lang.Math;
 import java.util.ArrayList;
 
