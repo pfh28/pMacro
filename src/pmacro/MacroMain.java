@@ -9,13 +9,8 @@ public class MacroMain
 	{
 		Typist typist = new Typist();
 		MacroParser parser = new MacroParser();
-		ArrayList<int[]> cmds = parser.parseFile("test.txt");
+		ArrayList<Command> cmds = parser.parseFile("test.txt");
 
 		typist.type(cmds);
-
-		for(int[] cmd : cmds)
-		{
-			System.out.printf("%d %d\n", cmd[0], cmd[1]);
-		}
 	}
 }

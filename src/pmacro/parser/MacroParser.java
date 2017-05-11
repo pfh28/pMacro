@@ -1,5 +1,6 @@
 package pmacro.parser;
 
+import pmacro.Command;
 import pmacro.Typist;
 
 import java.util.HashMap;
@@ -119,10 +120,10 @@ public class MacroParser
 		map.put("F12",123);
 	}
 
-	public ArrayList<int[]> parseFile(String fileName)
+	public ArrayList<Command> parseFile(String fileName)
 	{
 		String line;
-		ArrayList<int[]> rv = new ArrayList<int[]>();
+		ArrayList<Command> rv = new ArrayList<Command>();
 		try
 		{
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -136,25 +137,24 @@ public class MacroParser
 		return rv;
 	}
 
-	public ArrayList<int[]> parseLine(String line)
+	public ArrayList<Command> parseLine(String line)
 	{
 		Stack<String> stack = new Stack<String>();
-		ArrayList<int[]> rv = new ArrayList<int[]>();
+		ArrayList<Command> rv = new ArrayList<Command>();
 		String[] keys = line.split(" ");
 
 		for(String key : keys)	//handle keypresses, delays, errors
 		{
-			int[] cmd = new int[2];
+			Command cmd;
 			if(map.containsKey(key))
 			{
-				cmd[0] = Typist.PRESS;
-				cmd[1] = map.get(key);
+				cmd = new Command(Command.PRESS, map.get(key));
 				stack.push(key);
 			}
 			else if(key.matches("^:\\d+$"))
 			{
-				cmd[0] = Typist.DELAY;
-				cmd[1] = Integer.parseInt(key.replaceAll(":", ""));
+				int duration = Integer.parseInt(key.replaceAll(":", ""));	//parses the specified delay
+				cmd = new Command(Command.DELAY, duration);
 			}
 			else
 			{
@@ -166,9 +166,7 @@ public class MacroParser
 
 		while(!stack.empty())	//handle key releases
 		{
-			int[] cmd = new int[2];
-			cmd[0] = Typist.RELEASE;
-			cmd[1] = map.get(stack.pop());
+			Command cmd = new Command(Command.RELEASE, map.get(stack.pop()));
 			rv.add(cmd);
 		}
 

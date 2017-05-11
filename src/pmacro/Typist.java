@@ -1,15 +1,11 @@
 package pmacro;
 
 import java.awt.Robot;
-import java.lang.Math;
 import java.util.ArrayList;
 
 public class Typist
 {
 	Robot rob;
-	public static final int PRESS = 0;
-	public static final int RELEASE = 1;
-	public static final int DELAY = 2;
 
 	public Typist()
 	{
@@ -21,22 +17,20 @@ public class Typist
 		{e.printStackTrace();}
 	}
 //format: keys, time delays:[p/r/t,<key>/<ms>]
-	public void type(ArrayList<int[]> commands)		
+	public void type(ArrayList<Command> commands)
 	{
-		for(int[] cmd : commands)
+		for(Command cmd : commands)
 		{
-			cmd[1] = Math.abs(cmd[1]);
-
-			switch(cmd[0])
+			switch(cmd.getCmdType())
 			{
-				case PRESS:
-					rob.keyPress(cmd[1]);
+				case Command.PRESS:
+					rob.keyPress(cmd.getValue());
 					break;
-				case RELEASE:
-					rob.keyRelease(cmd[1]);
+				case Command.RELEASE:
+					rob.keyRelease(cmd.getValue());
 					break;
-				case DELAY:
-					rob.delay(cmd[1]);
+				case Command.DELAY:
+					rob.delay(cmd.getValue());
 					break;
 			}
 		}
